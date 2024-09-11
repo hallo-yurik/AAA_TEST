@@ -1,0 +1,59 @@
+.background {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    height: 100vh;
+    width: 100vw;
+
+    transition: background-color 1s ease-out;
+
+    overflow: hidden;
+}
+
+.canvas {
+    cursor: grab;
+}
+
+.canvas:active {
+    cursor: grabbing;
+}
+
+.circle {
+    background-color: white;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    box-shadow: 0 0 50px 50px #ababab;
+    position: absolute;
+
+    /*Centering*/
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+
+    /*Animation*/
+    animation-duration: 10s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+    animation-name: enlarge;
+}
+
+@keyframes enlarge {
+    0% {
+        width: 30vw;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 10%;
+    }
+
+    70% {
+        opacity: 5%;
+    }
+
+    100% {
+        width: 100vw;
+        opacity: 0;
+    }
+}
