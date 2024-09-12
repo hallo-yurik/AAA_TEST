@@ -1,5 +1,6 @@
 import styles from "@/styles/Buttons.module.css";
 import {rotateCallbackType} from "@/components/Buttons/Overlay";
+import {Suspense} from "react";
 
 type propsType = {
     imagePath: string,
@@ -9,9 +10,12 @@ type propsType = {
 
 const ViewButton = (props: propsType) => {
     return (
-        <div className={`${styles.viewButton}`} onClick={() => props.rotateCamera(props.rotateAngle)}>
-            <img src={props.imagePath} alt=""/>
-        </div>
+        <Suspense>
+            <div className={`${styles.viewButton}`} style={{opacity: props.imagePath ? 100 : 0}} onClick={() => props.rotateCamera(props.rotateAngle)}>
+                <div/>
+                <img src={props.imagePath} alt=""/>
+            </div>
+        </Suspense>
     )
 }
 

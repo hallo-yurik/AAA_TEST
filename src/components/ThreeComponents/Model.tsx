@@ -77,8 +77,6 @@ const Model = () => {
         // const materialName = "M_B0007_SonicThermoFacialBrush6in1_Body"
         // const materialName = "M_B0007_SonicThermoFacialBrush6in1_Metal"
 
-        // console.log(gltf.materials);
-
         for (const materialName in gltf.materials) {
             const material = gltf.materials[materialName];
 

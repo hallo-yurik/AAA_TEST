@@ -1,12 +1,11 @@
 "use client";
 
-import {Canvas, Camera} from "@react-three/fiber";
+import {Canvas, useThree} from "@react-three/fiber";
 import Model from "@/components/ThreeComponents/Model";
-import {LegacyRef, Suspense} from "react";
+import {LegacyRef, RefObject, Suspense} from "react";
 import {Environment, OrbitControls} from "@react-three/drei";
 import styles from "@/styles/Background.module.css";
-import {OrthographicCamera, PerspectiveCamera} from "three";
-// import {rotateCallbackType} from "@/app/page";
+import ViewCameraManager from "@/components/ThreeComponents/ViewCameraManager";
 // import TWEEN from '@tweenjs/tween.js'
 
 // function Tween() {
@@ -17,23 +16,19 @@ import {OrthographicCamera, PerspectiveCamera} from "three";
 
 type propsType = {
     orbitRef: LegacyRef<any>
-}
-
-const ViewCamera = (props: any) => {
-    const camera = new PerspectiveCamera(10);
-
-    return <privitive/>
+    setViewImages: (value: [string, string, string]) => void
 }
 
 const ThreeScene = (props: propsType) => {
+
     return (
         <Canvas shadows gl={{antialias: true}} dpr={[1, 1.5]} className={styles.canvas}
                 camera={{fov: 10}}
         >
             <Suspense>
                 <Model/>
+                <ViewCameraManager setViewImages={props.setViewImages}/>
             </Suspense>
-            <ViewCamera/>
             <Environment
                 files={"/textures/studio_small.exr"}
                 background={false}

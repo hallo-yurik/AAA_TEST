@@ -7,7 +7,8 @@ import {LegacyRef} from "react";
 const BASE_IMG_PATH = "/images/";
 
 type propsType = {
-    readonly orbitRef: LegacyRef<any>
+    readonly orbitRef: LegacyRef<any>,
+    viewImages: [string, string, string]
 }
 
 export type rotateCallbackType = (angleInRad: number) => void;
@@ -21,9 +22,10 @@ const Overlay = (props: propsType) => {
     return (
         <>
             <div className={styles.viewButtonContainer}>
-                <ViewButton imagePath={BASE_IMG_PATH + "1-f.png"} rotateCamera={rotateCallback} rotateAngle={0}/>
-                <ViewButton imagePath={BASE_IMG_PATH + "1-f.png"} rotateCamera={rotateCallback} rotateAngle={-Math.PI / 2}/>
-                <ViewButton imagePath={BASE_IMG_PATH + "1-f.png"} rotateCamera={rotateCallback} rotateAngle={-Math.PI}/>
+                <ViewButton imagePath={props.viewImages[0]} rotateCamera={rotateCallback} rotateAngle={0}/>
+                <ViewButton imagePath={props.viewImages[1]} rotateCamera={rotateCallback}
+                            rotateAngle={-Math.PI / 2}/>
+                <ViewButton imagePath={props.viewImages[2]} rotateCamera={rotateCallback} rotateAngle={-Math.PI}/>
             </div>
         </>
     )

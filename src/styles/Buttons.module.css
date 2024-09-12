@@ -22,25 +22,34 @@
 .viewButton {
     width: 75px;
     height: 75px;
-    border-radius: 5px;
-    background-color: white;
 
     position: relative;
 
-    opacity: 40%;
-
     cursor: pointer;
     user-select: none;
+
+    transition: opacity 1s ease-out;
+}
+
+.viewButton > div {
+    opacity: 20%;
+
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    background-color: white;
 }
 
 .viewButton > img {
-    width: 75px;
-    height: 75px;
+    width: 100%;
+    height: 100%;
+}
+
+.viewButton > div,
+.viewButton > img {
+    position: absolute;
 
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-
-    position: absolute;
-
 }
