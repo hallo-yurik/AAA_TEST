@@ -60,7 +60,7 @@ const Model = () => {
     const gltf = useGLTF(MODEL_PATH);
     const mesh = useRef<Mesh>(null!);
 
-    const texture = useTexture("/textures/colors/Body_Aquamarine_D.png.webp");
+    const texture = useTexture("/textures/colors/Body_Aquamarine_D.webp");
     texture.flipY = false;
     texture.needsUpdate = true;
 

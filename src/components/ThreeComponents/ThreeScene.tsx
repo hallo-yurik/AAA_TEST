@@ -1,31 +1,39 @@
 "use client";
 
-import {Canvas} from "@react-three/fiber";
+import {Canvas, Camera} from "@react-three/fiber";
 import Model from "@/components/ThreeComponents/Model";
-import {Suspense, useRef} from "react";
-import {Environment, Html, OrbitControls, useProgress} from "@react-three/drei";
+import {LegacyRef, Suspense} from "react";
+import {Environment, OrbitControls} from "@react-three/drei";
 import styles from "@/styles/Background.module.css";
+import {OrthographicCamera, PerspectiveCamera} from "three";
+// import {rotateCallbackType} from "@/app/page";
+// import TWEEN from '@tweenjs/tween.js'
 
-// import {BlendFunction} from "postprocessing";
+// function Tween() {
+//     useFrame(() => {
+//         TWEEN.update();
+//     })
+// }
 
-function Loader() {
-    const {progress} = useProgress()
-
-    return <Html center>{progress.toFixed(1)} % loaded</Html>
+type propsType = {
+    orbitRef: LegacyRef<any>
 }
 
-const ThreeScene = () => {
-    const orbitRef = useRef(null);
+const ViewCamera = (props: any) => {
+    const camera = new PerspectiveCamera(10);
 
+    return <privitive/>
+}
+
+const ThreeScene = (props: propsType) => {
     return (
         <Canvas shadows gl={{antialias: true}} dpr={[1, 1.5]} className={styles.canvas}
                 camera={{fov: 10}}
         >
-            {/*<OrthographicCamera makeDefault zoom={800} />*/}
-            {/*<ambientLight intensity={1}/>*/}
             <Suspense>
                 <Model/>
             </Suspense>
+            <ViewCamera/>
             <Environment
                 files={"/textures/studio_small.exr"}
                 background={false}
@@ -35,13 +43,14 @@ const ThreeScene = () => {
                 environmentRotation={[0, Math.PI, 0]}
             />
             <OrbitControls
-                ref={orbitRef}
+                ref={props.orbitRef}
                 makeDefault
                 minPolarAngle={Math.PI / 2}
                 maxPolarAngle={Math.PI / 2}
                 enablePan={false}
                 enableZoom={false}
             />
+            {/*<Tween/>*/}
         </Canvas>
     )
 }

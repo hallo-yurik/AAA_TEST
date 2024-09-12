@@ -1,17 +1,16 @@
 "use client";
 
 import Background from "@/components/Background";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import ThreeScene from "@/components/ThreeComponents/ThreeScene";
 import Overlay from "@/components/Buttons/Overlay";
 
-// const Scene = dynamic(() => import("@/components/ThreeComponents/ThreeScene"), { ssr: false })
-
 export type colorType = {
     texture: string,
-    color: string,
-    // buttonColor: string
+    color: string
 }
+
+// export type rotateCallbackType = (refModel: RefObject<HTMLInputElement>, angleInRad: number) => void;
 
 const availableColors: colorType[] = [
     {
@@ -25,14 +24,18 @@ const availableColors: colorType[] = [
 ]
 
 export default function Home() {
+    // State.
     const [currentColorIndex, setColorIndex] = useState(0);
     const currentColor = availableColors[currentColorIndex];
+
+    // Refs.
+    const orbitRef = useRef(null);
 
     return (
         <>
             <Background color={currentColor.color}/>
-            <ThreeScene/>
-            <Overlay/>
+            <ThreeScene orbitRef={orbitRef}/>
+            <Overlay orbitRef={orbitRef}/>
         </>
     );
 }

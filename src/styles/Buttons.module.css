@@ -30,6 +30,7 @@
     opacity: 40%;
 
     cursor: pointer;
+    user-select: none;
 }
 
 .viewButton > img {
