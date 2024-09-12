@@ -1,0 +1,71 @@
+.colorButtonContainer {
+    position: absolute;
+    top: 50%;
+    right: 100px;
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 35px;
+
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 34px 21px 34px 21px;
+    border-radius: 33.5px;
+    box-shadow: 0 0 6px 3px rgba(152, 152, 152, 0.2);
+
+    transition: opacity 1s ease-out;
+}
+
+.colorButton {
+    width: 25px;
+    height: 25px;
+
+    position: relative;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.colorCircle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    transition: width 500ms ease-out, height 500ms ease-out;
+}
+
+.colorButton.active > .colorCircle,
+.colorButton:hover > .colorCircle {
+    width: 75%;
+    height: 75%;
+}
+
+.outline {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    opacity: 0;
+    border-radius: 50%;
+    border: #ababab solid 1px;
+
+    transition: opacity 500ms ease-out, width 500ms ease-out, height 500ms ease-out;
+}
+
+.colorButton.active > .outline,
+.colorButton:hover > .outline {
+    width: 150%;
+    height: 150%;
+
+    opacity: 100%;
+}

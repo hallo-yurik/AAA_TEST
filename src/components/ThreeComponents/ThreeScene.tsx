@@ -1,11 +1,12 @@
 "use client";
 
-import {Canvas, useThree} from "@react-three/fiber";
+import {Canvas} from "@react-three/fiber";
 import Model from "@/components/ThreeComponents/Model";
-import {LegacyRef, RefObject, Suspense} from "react";
+import {LegacyRef, Suspense} from "react";
 import {Environment, OrbitControls} from "@react-three/drei";
 import styles from "@/styles/Background.module.css";
 import ViewCameraManager from "@/components/ThreeComponents/ViewCameraManager";
+import {colorType} from "@/ColorsData";
 // import TWEEN from '@tweenjs/tween.js'
 
 // function Tween() {
@@ -17,6 +18,7 @@ import ViewCameraManager from "@/components/ThreeComponents/ViewCameraManager";
 type propsType = {
     orbitRef: LegacyRef<any>
     setViewImages: (value: [string, string, string]) => void
+    currentColor: colorType
 }
 
 const ThreeScene = (props: propsType) => {
@@ -26,8 +28,8 @@ const ThreeScene = (props: propsType) => {
                 camera={{fov: 10}}
         >
             <Suspense>
-                <Model/>
-                <ViewCameraManager setViewImages={props.setViewImages}/>
+                <Model currentColor={props.currentColor}/>
+                <ViewCameraManager setViewImages={props.setViewImages} currentColor={props.currentColor}/>
             </Suspense>
             <Environment
                 files={"/textures/studio_small.exr"}

@@ -1,6 +1,7 @@
 import {useGLTF, useTexture} from "@react-three/drei"
-import {Mesh} from "three";
-import {useEffect, useRef} from "react";
+import {Color, Mesh} from "three";
+import {useCallback, useEffect, useRef} from "react";
+import {colorType} from "@/ColorsData";
 
 const MODEL_PATH = "/models/model_1.glb"
 
@@ -53,16 +54,22 @@ useGLTF.preload(MODEL_PATH)
 //         });
 //     }
 
-const Model = () => {
+type propsType = {
+    currentColor: colorType
+}
+
+const Model = (props: propsType) => {
     const BODY_ORM_PATH = "/textures/Body_ORM.png.jpg"
     const BITS_ORM_PATH = "/textures/Bits_ORM.png.jpg"
 
     const gltf = useGLTF(MODEL_PATH);
     const mesh = useRef<Mesh>(null!);
 
-    const texture = useTexture("/textures/colors/Body_Aquamarine_D.webp");
-    texture.flipY = false;
-    texture.needsUpdate = true;
+    useTexture(props.currentColor.texture, (texture) => {
+        texture.flipY = false;
+        texture.needsUpdate = true;
+        setMaterials(texture, props.currentColor.color);
+    });
 
     const bodyOrmTexture = useTexture(BODY_ORM_PATH);
     bodyOrmTexture.flipY = false;
@@ -72,11 +79,7 @@ const Model = () => {
     bitsOrmTexture.flipY = false;
     bitsOrmTexture.needsUpdate = true;
 
-    useEffect(() => {
-        // const materialName = "M_B0007_SonicThermoFacialBrush6in1_Bits"
-        // const materialName = "M_B0007_SonicThermoFacialBrush6in1_Body"
-        // const materialName = "M_B0007_SonicThermoFacialBrush6in1_Metal"
-
+    const setMaterials = useCallback((texture, color) => {
         for (const materialName in gltf.materials) {
             const material = gltf.materials[materialName];
 
@@ -100,13 +103,17 @@ const Model = () => {
                 material.aoMap = bitsOrmTexture;
                 material.roughnessMap = bitsOrmTexture;
                 material.metalnessMap = bitsOrmTexture;
-            }
 
-            console.log(material)
+                material.color.copy(new Color(color));
+            }
 
             material.needsUpdate = true;
         }
-    }, [gltf.materials, texture, bodyOrmTexture])
+    }, [])
+
+    // useEffect(() => {
+    //     setMaterials();
+    // }, [])
 
     return (
         <>
