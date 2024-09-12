@@ -10,19 +10,17 @@ import Overlay from "@/components/Buttons/Overlay";
 export type colorType = {
     texture: string,
     color: string,
-    buttonColor: string
+    // buttonColor: string
 }
 
 const availableColors: colorType[] = [
     {
         texture: "./",
-        color: "#c5c5c5",
-        buttonColor: ""
+        color: "#c5c5c5"
     },
     {
         texture: "./",
-        color: "#ea6e6e",
-        buttonColor: ""
+        color: "#ea6e6e"
     },
 ]
 
