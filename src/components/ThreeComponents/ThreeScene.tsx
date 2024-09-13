@@ -1,17 +1,17 @@
 "use client";
 
-import {Canvas} from "@react-three/fiber";
+import {Canvas, useFrame} from "@react-three/fiber";
 import Model from "@/components/ThreeComponents/Model";
 import {LegacyRef, Suspense} from "react";
 import {Environment, OrbitControls} from "@react-three/drei";
 import styles from "@/styles/Background.module.css";
 import ViewCameraManager from "@/components/ThreeComponents/ViewCameraManager";
 import {colorType} from "@/ColorsData";
-// import TWEEN from '@tweenjs/tween.js'
+import TWEEN from '@tweenjs/tween.js'
 
 // function Tween() {
-//     useFrame(() => {
-//         TWEEN.update();
+//     useFrame((_, delta) => {
+//         TWEEN.update(delta);
 //     })
 // }
 

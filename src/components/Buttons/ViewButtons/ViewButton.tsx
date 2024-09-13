@@ -9,7 +9,7 @@ type propsType = {
     isPrevious: boolean
 }
 
-const usePrevious = (value) => {
+export const usePrevious = (value) => {
     const ref = useRef();
     useEffect(() => {
         ref.current = value;
@@ -30,8 +30,6 @@ const ViewButton = (props: propsType) => {
             setImagesOpacity([100, 0])
             setImagesPath([props.imagePath, prevPath])
         }
-
-        console.log(props.imagePath, prevPath)
     }, [props.isPrevious])
 
     return (
@@ -39,16 +37,13 @@ const ViewButton = (props: propsType) => {
             <div className={`${styles.viewButton}`}
                  onClick={() => props.rotateCamera(props.rotateAngle)}>
                 <div/>
-                <img className={styles.a} src={imagesPath[0]} style={{opacity: imagesOpacity[0]}}
-                            alt=""/>
-
-
+                <img src={imagesPath[0]} style={{opacity: imagesOpacity[0]}}
+                     alt=""/>
                 {
                     imagesPath[1]
-                    && <img className={styles.b} src={imagesPath[1]} style={{opacity: imagesOpacity[1]}}
+                    && <img src={imagesPath[1]} style={{opacity: imagesOpacity[1]}}
                             alt=""/>
                 }
-
             </div>
         </Suspense>
     )

@@ -1,70 +1,33 @@
 import {useGLTF, useTexture} from "@react-three/drei"
-import {Color, Mesh} from "three";
+import {Color, Mesh, Texture} from "three";
 import {useCallback, useEffect, useRef} from "react";
 import {colorType} from "@/ColorsData";
+import * as TWEEN from "@tweenjs/tween.js";
+// import {Tween, Group} from "@tweenjs/tween.js";
+import {usePrevious} from "@/components/Buttons/ViewButtons/ViewButton";
+import {useFrame} from "@react-three/fiber";
 
 const MODEL_PATH = "/models/model_1.glb"
 
 useGLTF.preload(MODEL_PATH)
 
-// paintExterior(texture) {
-//         const map1 = game.cache.texture3d["fuselageLevel5"];
-//         const grayscale = game.cache.texture3d["mid_noise"];
-//
-//         const material = new MeshLambertMaterial({
-//             map: game.cache.texture3d[texture],
-//             side: DoubleSide,
-//             onBeforeCompile: (shader) => {
-//                 shader.uniforms.map1 = {value: map1};
-//                 shader.uniforms.grayscale = {value: grayscale};
-//                 shader.uniforms.mixVal = this.mixValue;
-//
-//                 shader.fragmentShader = `
-//                     uniform sampler2D map1;
-//                     uniform sampler2D grayscale;
-//                     uniform float mixVal;
-//                     ${shader.fragmentShader}
-//                     `
-//                     .replace(`#include <map_fragment>`, `
-//                         #ifdef USE_MAP
-//                             vec4 texelColor;
-//                             vec4 texelColor0 = texture2D(map, vUv);
-//                             vec4 texelColor1 = texture2D(map1, vUv);
-//                             float grayscaleX = texture2D(grayscale, vUv).x;
-//
-//                             if (grayscaleX > mixVal) {
-//                                 texelColor = texelColor0;
-//                             } else {
-//                                 texelColor = texelColor1;
-//                             }
-//
-//                     	    texelColor = mapTexelToLinear(texelColor);
-//                     	    diffuseColor *= texelColor;
-//                     	#endif
-//                     `);
-//             }
-//         });
-//
-//         this.exterior.traverse(object => {
-//             if (object.isMesh) {
-//                 if (this.properties.MainPalette.includes(object.name)) return;
-//
-//                 object.material = material;
-//             }
-//         });
-//     }
-
 type propsType = {
     currentColor: colorType
 }
 
-const Model = (props: propsType) => {
-    const BODY_ORM_PATH = "/textures/Body_ORM.png.jpg"
-    const BITS_ORM_PATH = "/textures/Bits_ORM.png.jpg"
+const BODY_ORM_PATH = "/textures/Body_ORM.png.jpg"
+const BITS_ORM_PATH = "/textures/Bits_ORM.png.jpg"
 
+const Model = (props: propsType) => {
+    const mixValTweenRef = useRef({value: 0});
+    const mapNextTweenRef = useRef({value: new Texture()});
     const gltf = useGLTF(MODEL_PATH);
 
-   useTexture(props.currentColor.texture, (texture) => {
+    // Tweening.
+    const tweenRef = useRef(new TWEEN.Tween(mixValTweenRef.current)
+        .to({value: 1}, 1000));
+
+    useTexture(props.currentColor.texture, (texture) => {
         texture.flipY = false;
         texture.needsUpdate = true;
         setMaterials(texture, props.currentColor.color);
@@ -78,7 +41,43 @@ const Model = (props: propsType) => {
     bitsOrmTexture.flipY = false;
     bitsOrmTexture.needsUpdate = true;
 
+    useFrame(() => {
+        tweenRef.current.update();
+    })
+
+    useEffect(() => {
+        for (const materialName in gltf.materials) {
+            const material = gltf.materials[materialName];
+
+            if (!materialName.toUpperCase().includes("BITS")) {
+                material.onBeforeCompile = (shader) => {
+                    shader.uniforms.map1 = mapNextTweenRef.current;
+                    shader.uniforms.mixVal = mixValTweenRef.current;
+
+                    shader.fragmentShader = `
+                    uniform sampler2D map1;
+                    uniform float mixVal;
+                    ${shader.fragmentShader}
+                    `
+                        .replace(`#include <map_fragment>`, `
+                        #ifdef USE_MAP
+                            vec4 texelColor;
+                            vec4 sampledDiffuseColor = texture2D(map, vMapUv);
+                            vec4 texelColor1 = texture2D(map1, vMapUv);
+                            texelColor = mix(sampledDiffuseColor, texelColor1, mixVal);
+
+                            diffuseColor *= texelColor;
+                        #endif
+                    `);
+                }
+            }
+        }
+    }, [])
+
     const setMaterials = useCallback((texture, color) => {
+        mapNextTweenRef.current.value = texture;
+        mixValTweenRef.current.value = 0;
+
         for (const materialName in gltf.materials) {
             const material = gltf.materials[materialName];
 
@@ -87,7 +86,7 @@ const Model = (props: propsType) => {
                 material.roughnessMap = bodyOrmTexture;
                 material.metalnessMap = bodyOrmTexture;
 
-                material.map = texture;
+                // material.map = mapNextTweenRef.current.value;
             }
 
             if (materialName.toUpperCase().includes("BODY")) {
@@ -95,7 +94,7 @@ const Model = (props: propsType) => {
                 material.roughnessMap = bodyOrmTexture;
                 material.metalnessMap = bodyOrmTexture;
 
-                material.map = texture;
+                // material.map = mapNextTweenRef.current.value;
             }
 
             if (materialName.toUpperCase().includes("BITS")) {
@@ -108,6 +107,27 @@ const Model = (props: propsType) => {
 
             material.needsUpdate = true;
         }
+
+        tweenRef.current
+            .stop()
+            .onComplete(() => {
+                for (const materialName in gltf.materials) {
+                    const material = gltf.materials[materialName];
+
+                    if (!materialName.toUpperCase().includes("BITS")) {
+                        material.map = mapNextTweenRef.current.value;
+                        material.needsUpdate = true;
+                    }
+                }
+            })
+            .onUpdate(() => {
+                for (const materialName in gltf.materials) {
+                    const material = gltf.materials[materialName];
+
+                    material.needsUpdate = true;
+                }
+            })
+            .start()
     }, [])
 
     return (
