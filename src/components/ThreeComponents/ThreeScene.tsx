@@ -7,33 +7,31 @@ import {Environment, OrbitControls} from "@react-three/drei";
 import styles from "@/styles/Background.module.css";
 import ViewCameraManager from "@/components/ThreeComponents/ViewCameraManager";
 import {colorType} from "@/ColorsData";
-import TWEEN from '@tweenjs/tween.js'
-
-// function Tween() {
-//     useFrame((_, delta) => {
-//         TWEEN.update(delta);
-//     })
-// }
 
 type propsType = {
     orbitRef: LegacyRef<any>
     currentColor: colorType
 }
 
+// const Aaa = () => {
+//     console.log("aaaa")
+//     return <div>123</div>
+// }
+
 const ThreeScene = (props: propsType) => {
 
     return (
+        // <Suspense fallback={<Aaa/>}>
         <Canvas shadows gl={{antialias: true}} dpr={[1, 1.5]} className={styles.canvas}
                 camera={{fov: 10}}
         >
-            <Suspense>
-                <Model currentColor={props.currentColor}/>
-                <ViewCameraManager/>
-            </Suspense>
+            <Model currentColor={props.currentColor}/>
+            <ViewCameraManager/>
             <Environment
                 files={"/textures/studio_small.exr"}
                 background={false}
                 environmentIntensity={1}
+                // environmentIntensity={0}
                 resolution={16}
                 blur={1}
                 environmentRotation={[0, Math.PI, 0]}
@@ -46,8 +44,8 @@ const ThreeScene = (props: propsType) => {
                 enablePan={false}
                 enableZoom={false}
             />
-            {/*<Tween/>*/}
         </Canvas>
+        // </Suspense>
     )
 }
 

@@ -1,6 +1,6 @@
 import styles from "@/styles/ViewButtons.module.css";
 import {rotateCallbackType} from "@/components/Buttons/Overlay";
-import {Suspense, useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 type propsType = {
     imagePath: string,
@@ -33,19 +33,17 @@ const ViewButton = (props: propsType) => {
     }, [props.isPrevious])
 
     return (
-        <Suspense>
-            <div className={`${styles.viewButton}`}
-                 onClick={() => props.rotateCamera(props.rotateAngle)}>
-                <div/>
-                <img src={imagesPath[0]} style={{opacity: imagesOpacity[0]}}
-                     alt=""/>
-                {
-                    imagesPath[1]
-                    && <img src={imagesPath[1]} style={{opacity: imagesOpacity[1]}}
-                            alt=""/>
-                }
-            </div>
-        </Suspense>
+        <div className={`${styles.viewButton}`}
+             onClick={() => props.rotateCamera(props.rotateAngle)}>
+            <div/>
+            <img src={imagesPath[0]} style={{opacity: imagesOpacity[0]}}
+                 alt=""/>
+            {
+                imagesPath[1]
+                && <img src={imagesPath[1]} style={{opacity: imagesOpacity[1]}}
+                        alt=""/>
+            }
+        </div>
     )
 }
 
