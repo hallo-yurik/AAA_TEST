@@ -3,16 +3,14 @@ import {availableColors} from "@/ColorsData";
 import ColorButton from "@/components/Buttons/ColorButtons/ColorButton";
 
 type propsType = {
-    currentColorIndex: number,
-    setColorIndex: (index: number) => void,
-    viewImages: [string, string, string],
+    currentColorIndex: number
+    setColorIndex: (index: number) => void
+    onColorChange: () => void
 }
 
 const ColorButtonsContainer = (props: propsType) => {
-    const isImage = !!props.viewImages[0];
-
     return (
-        <div className={`${styles.colorButtonContainer}`} style={{ opacity: isImage ? 100 : 0}}>
+        <div className={`${styles.colorButtonContainer}`}>
             {availableColors.map((color, index) => (
                 <ColorButton
                     color={color.color}
@@ -20,6 +18,7 @@ const ColorButtonsContainer = (props: propsType) => {
                     isActive={index === props.currentColorIndex}
                     setColorIndex={props.setColorIndex}
                     index={index}
+                    onColorChange={props.onColorChange}
                 />
             ))}
         </div>

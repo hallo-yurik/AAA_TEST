@@ -63,9 +63,8 @@ const Model = (props: propsType) => {
     const BITS_ORM_PATH = "/textures/Bits_ORM.png.jpg"
 
     const gltf = useGLTF(MODEL_PATH);
-    const mesh = useRef<Mesh>(null!);
 
-    useTexture(props.currentColor.texture, (texture) => {
+   useTexture(props.currentColor.texture, (texture) => {
         texture.flipY = false;
         texture.needsUpdate = true;
         setMaterials(texture, props.currentColor.color);
@@ -111,16 +110,10 @@ const Model = (props: propsType) => {
         }
     }, [])
 
-    // useEffect(() => {
-    //     setMaterials();
-    // }, [])
-
     return (
-        <>
-            <mesh ref={mesh}>
-                <primitive object={gltf.scene} scale={[6.5, 6.5, 6.5]}/>
-            </mesh>
-        </>
+        <mesh>
+            <primitive object={gltf.scene} scale={[6.5, 6.5, 6.5]}/>
+        </mesh>
     )
 }
 

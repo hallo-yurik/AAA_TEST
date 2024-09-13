@@ -1,12 +1,11 @@
 "use client";
 
-import {LegacyRef} from "react";
+import {LegacyRef, useRef, useState} from "react";
 import ViewButtonsContainer from "@/components/Buttons/ViewButtons";
 import ColorButtonsContainer from "@/components/Buttons/ColorButtons";
 
 type propsType = {
-    orbitRef: LegacyRef<any>,
-    viewImages: [string, string, string],
+    orbitRef: LegacyRef<any>
     currentColorIndex: number
     setColorIndex: (index: number) => void
 }
@@ -14,10 +13,17 @@ type propsType = {
 export type rotateCallbackType = (angleInRad: number) => void;
 
 const Overlay = (props: propsType) => {
+    const [isPrevious, setIsPrevious] = useState(false);
+    const onColorChange = () => {
+        setIsPrevious(!isPrevious)
+    }
+
     return (
         <>
-            <ViewButtonsContainer viewImages={props.viewImages} orbitRef={props.orbitRef}/>
-            <ColorButtonsContainer viewImages={props.viewImages} currentColorIndex={props.currentColorIndex} setColorIndex={props.setColorIndex}/>
+            <ViewButtonsContainer isPrevious={isPrevious} currentColorIndex={props.currentColorIndex} orbitRef={props.orbitRef}/>
+            <ColorButtonsContainer currentColorIndex={props.currentColorIndex}
+                                   setColorIndex={props.setColorIndex}
+                                   onColorChange={onColorChange}/>
         </>
     )
 }

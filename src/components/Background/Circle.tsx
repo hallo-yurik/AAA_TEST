@@ -1,14 +1,12 @@
 import styles from "@/styles/Background.module.css";
-import {CSSProperties} from "react";
 
 type propsType = {
-    animationDelay: string,
-    isImage: boolean
+    animationDelay: string
 }
 
 const Circle = (props: propsType) => {
     return (
-        <div style={{animationDelay: props.animationDelay, opacity: props.isImage ? 100 : "0% !important"}} className={styles.circle}/>
+        <div style={{animationDelay: props.animationDelay}} className={styles.circle}/>
     )
 }
 

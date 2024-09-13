@@ -17,7 +17,6 @@ import {colorType} from "@/ColorsData";
 
 type propsType = {
     orbitRef: LegacyRef<any>
-    setViewImages: (value: [string, string, string]) => void
     currentColor: colorType
 }
 
@@ -29,7 +28,7 @@ const ThreeScene = (props: propsType) => {
         >
             <Suspense>
                 <Model currentColor={props.currentColor}/>
-                <ViewCameraManager setViewImages={props.setViewImages} currentColor={props.currentColor}/>
+                <ViewCameraManager/>
             </Suspense>
             <Environment
                 files={"/textures/studio_small.exr"}

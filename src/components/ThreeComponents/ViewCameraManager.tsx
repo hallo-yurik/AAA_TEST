@@ -2,37 +2,44 @@ import ViewCamera from "@/components/ThreeComponents/ViewCamera";
 import {useCallback, useEffect, useRef} from "react";
 import {PerspectiveCamera, WebGLRenderer} from "three";
 import {useThree} from "@react-three/fiber";
+import {colorType} from "@/ColorsData";
 
 type propsType = {
-    setViewImages: (value: [string, string, string]) => void
+    // setViewImages: (value: [string, string, string]) => void
+    // currentColor: colorType
 }
 
 const ViewCameraManager = (props: propsType) => {
-    const three = useThree();
+    // const three = useThree();
     const viewCamerasSet = useRef([new PerspectiveCamera(10), new PerspectiveCamera(10), new PerspectiveCamera(10)]);
 
-    const takeScreenshots = useCallback(() => {
-        const newImages = [];
-
-        for (let i = 0; i < 3; i++) {
-            const canvas = document.createElement("canvas");
-            canvas.width = 512;
-            canvas.height = 512;
-
-            const renderer = new WebGLRenderer({canvas: canvas});
-            renderer.setClearColor(0xffffff, 0);
-            renderer.setSize(canvas.width, canvas.height);
-            renderer.render(three.scene, viewCamerasSet.current[i]);
-
-            newImages.push(canvas.toDataURL());
-
-            props.setViewImages(newImages);
-        }
-    }, [three.scene])
-
-    useEffect(() => {
-        takeScreenshots()
-    }, [takeScreenshots])
+    // const takeScreenshots = useCallback(() => {
+    //     const newImages = [];
+    //
+    //     for (let i = 0; i < 3; i++) {
+    //         const canvas = document.createElement("canvas");
+    //         canvas.width = 2048;
+    //         canvas.height = 2048;
+    //
+    //         const renderer = new WebGLRenderer({canvas: canvas});
+    //         renderer.setClearColor(0xffffff, 0);
+    //         renderer.setSize(canvas.width, canvas.height);
+    //         renderer.render(three.scene, viewCamerasSet.current[i]);
+    //
+    //         newImages.push(canvas.toDataURL());
+    //
+    //         console.log(canvas.toDataURL())
+    //
+    //         props.setViewImages(newImages);
+    //
+    //         renderer.dispose()
+    //         renderer.forceContextLoss()
+    //     }
+    // }, [three.scene, props.currentColor])
+    //
+    // useEffect(() => {
+    //     takeScreenshots()
+    // }, [takeScreenshots])
 
     return (
         <>

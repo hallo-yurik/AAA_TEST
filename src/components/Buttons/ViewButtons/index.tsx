@@ -4,27 +4,35 @@ import ViewButton from "@/components/Buttons/ViewButtons/ViewButton";
 import {LegacyRef} from "react";
 
 type propsType = {
-    orbitRef: LegacyRef<any>,
-    viewImages: [string, string, string]
+    orbitRef: LegacyRef<any>
+    currentColorIndex: number
+    isPrevious: boolean
 }
 
-const ViewButtonsContainer = (props: propsType) => {
+const BASE_IMG_URL = "/images"
 
+const ViewButtonsContainer = (props: propsType) => {
     const rotateCallback: rotateCallbackType = (angleInRad) => {
         if (props.orbitRef.current) props.orbitRef.current.setAzimuthalAngle(angleInRad);
     }
 
     return (
         <div className={styles.viewButtonContainer}>
-            <ViewButton imagePath={props.viewImages[0]}
+            <ViewButton imagePath={`${BASE_IMG_URL}/${props.currentColorIndex}/0.png`}
                         rotateCamera={rotateCallback}
-                        rotateAngle={0}/>
-            <ViewButton imagePath={props.viewImages[1]}
+                        rotateAngle={0}
+                        isPrevious={props.isPrevious}
+            />
+            <ViewButton imagePath={`${BASE_IMG_URL}/${props.currentColorIndex}/1.png`}
                         rotateCamera={rotateCallback}
-                        rotateAngle={-Math.PI / 2}/>
-            <ViewButton imagePath={props.viewImages[2]}
+                        rotateAngle={-Math.PI / 2}
+                        isPrevious={props.isPrevious}
+            />
+            <ViewButton imagePath={`${BASE_IMG_URL}/${props.currentColorIndex}/2.png`}
                         rotateCamera={rotateCallback}
-                        rotateAngle={-Math.PI}/>
+                        rotateAngle={-Math.PI}
+                        isPrevious={props.isPrevious}
+            />
         </div>
     )
 }
