@@ -13,7 +13,10 @@ const BASE_IMG_URL = "/images"
 
 const ViewButtonsContainer = (props: propsType) => {
     const rotateCallback: rotateCallbackType = (angleInRad) => {
-        if (props.orbitRef.current) props.orbitRef.current.setAzimuthalAngle(angleInRad);
+        if (props.orbitRef.current) {
+            props.orbitRef.current.setAzimuthalAngle(angleInRad);
+            props.orbitRef.current.movedByButton = true;
+        }
     }
 
     return (
