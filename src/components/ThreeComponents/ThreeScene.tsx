@@ -21,7 +21,7 @@ const ThreeScene = (props: propsType) => {
                 camera={{fov: 10}}
         >
             <Model currentColor={props.currentColor}/>
-            <ViewCameraManager/>
+            <ViewCameraManager currentColor={props.currentColor}/>
             <Environment
                 files={"/textures/studio_small.exr"}
                 background={false}

@@ -4,6 +4,7 @@ import {useCallback, useEffect, useRef} from "react";
 import {colorType} from "@/ColorsData";
 import * as TWEEN from "@tweenjs/tween.js";
 import {useFrame} from "@react-three/fiber";
+import {Easing} from "@tweenjs/tween.js";
 
 const MODEL_PATH = "/models/model_1.glb"
 
@@ -23,7 +24,9 @@ const Model = (props: propsType) => {
 
     // Tweening.
     const tweenRef = useRef(new TWEEN.Tween(mixValTweenRef.current)
-        .to({value: 1}, 1000));
+        .to({value: 1}, 500));
+    const tweenOpacityRef = useRef(new TWEEN.Tween({value: 0})
+        .to({value: 1}, 500));
 
     // Loading common textures.
     useEffect(() => {
@@ -45,6 +48,14 @@ const Model = (props: propsType) => {
             }
         );
 
+        const diffuseTexture = loader.load(
+            props.currentColor.texture,
+            function (texture) {
+                texture.flipY = false;
+                texture.needsUpdate = true;
+            }
+        );
+
         for (const materialName in gltf.materials) {
             const material = gltf.materials[materialName];
 
@@ -53,7 +64,7 @@ const Model = (props: propsType) => {
                 material.roughnessMap = bodyOrmTexture;
                 material.metalnessMap = bodyOrmTexture;
 
-                material.map = mapNextTweenRef.current.value;
+                material.map = diffuseTexture;
             }
 
             if (materialName.toUpperCase().includes("BODY")) {
@@ -61,7 +72,7 @@ const Model = (props: propsType) => {
                 material.roughnessMap = bodyOrmTexture;
                 material.metalnessMap = bodyOrmTexture;
 
-                material.map = mapNextTweenRef.current.value;
+                material.map = diffuseTexture;
             }
 
             if (materialName.toUpperCase().includes("BITS")) {
@@ -70,6 +81,7 @@ const Model = (props: propsType) => {
                 material.metalnessMap = bitsOrmTexture;
 
                 material.emissive.copy(new Color("#000000"));
+                material.color.copy(new Color(props.currentColor.color));
             }
 
             if (!materialName.toUpperCase().includes("BITS")) {
@@ -95,6 +107,32 @@ const Model = (props: propsType) => {
                 }
             }
 
+            for (const materialName in gltf.materials) {
+                const material = gltf.materials[materialName];
+
+                material.transparent = true;
+                material.opacity = 0;
+            }
+
+            tweenOpacityRef.current
+                .delay(500)
+                .onUpdate(({value}) => {
+                    for (const materialName in gltf.materials) {
+                        const material = gltf.materials[materialName];
+
+                        material.opacity = value;
+                    }
+                })
+                .onComplete(() => {
+                    for (const materialName in gltf.materials) {
+                        const material = gltf.materials[materialName];
+
+                        material.transparent = false;
+                    }
+                })
+                .easing(Easing.Quadratic.Out)
+                .start()
+
             material.needsUpdate = true;
         }
     }, [])
@@ -115,6 +153,7 @@ const Model = (props: propsType) => {
 
     useFrame(() => {
         tweenRef.current.update();
+        tweenOpacityRef.current.update();
     })
 
     const setMaterials = useCallback((texture, color) => {
@@ -123,7 +162,7 @@ const Model = (props: propsType) => {
 
         tweenRef.current
             .stop()
-            .easing(TWEEN.Easing.Quadratic.Out)
+            .easing(Easing.Quadratic.Out)
             .onUpdate(({value}) => {
                 for (const materialName in gltf.materials) {
                     const material = gltf.materials[materialName];

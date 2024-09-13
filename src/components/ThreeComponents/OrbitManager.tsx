@@ -7,8 +7,8 @@ type propsType = {
 }
 
 const OrbitManager = (props: propsType) => {
-    const THRESHOLD_TIME = 2000;
-    const noActionTimerRef = useRef(0);
+    const THRESHOLD_TIME = 5000;
+    const noActionTimerRef = useRef(5000);
     const isHoldingRef = useRef(false);
 
     useFrame((_, dt) => {

@@ -6,37 +6,42 @@ import {colorType} from "@/ColorsData";
 
 type propsType = {
     // setViewImages: (value: [string, string, string]) => void
-    // currentColor: colorType
+    currentColor: colorType
 }
 
 const ViewCameraManager = (props: propsType) => {
-    // const three = useThree();
+    const three = useThree();
     const viewCamerasSet = useRef([new PerspectiveCamera(10), new PerspectiveCamera(10), new PerspectiveCamera(10)]);
 
-    // const takeScreenshots = useCallback(() => {
-    //     const newImages = [];
-    //
-    //     for (let i = 0; i < 3; i++) {
-    //         const canvas = document.createElement("canvas");
-    //         canvas.width = 2048;
-    //         canvas.height = 2048;
-    //
-    //         const renderer = new WebGLRenderer({canvas: canvas});
-    //         renderer.setClearColor(0xffffff, 0);
-    //         renderer.setSize(canvas.width, canvas.height);
-    //         renderer.render(three.scene, viewCamerasSet.current[i]);
-    //
-    //         newImages.push(canvas.toDataURL());
-    //
-    //         console.log(canvas.toDataURL())
-    //
-    //         props.setViewImages(newImages);
-    //
-    //         renderer.dispose()
-    //         renderer.forceContextLoss()
-    //     }
-    // }, [three.scene, props.currentColor])
-    //
+    const takeScreenshots = useCallback(() => {
+        const newImages = [];
+
+        for (let i = 0; i < 3; i++) {
+            const canvas = document.createElement("canvas");
+            canvas.width = 2048;
+            canvas.height = 2048;
+
+            const renderer = new WebGLRenderer({canvas: canvas});
+            renderer.setClearColor(0xffffff, 0);
+            renderer.setSize(canvas.width, canvas.height);
+            renderer.render(three.scene, viewCamerasSet.current[i]);
+
+            newImages.push(canvas.toDataURL());
+
+            console.log(newImages[i])
+
+            const img = document.createElement("img")
+            img.src = canvas.toDataURL()
+
+            // props.setViewImages(newImages);
+
+            renderer.dispose()
+            renderer.forceContextLoss()
+        }
+    }, [three.scene, props.currentColor])
+
+    window.aaa = takeScreenshots
+
     // useEffect(() => {
     //     takeScreenshots()
     // }, [takeScreenshots])
