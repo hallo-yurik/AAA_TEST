@@ -15,7 +15,7 @@ export const usePrevious = (value) => {
         ref.current = value;
     });
     return ref.current;
-}
+};
 
 const ViewButton = (props: propsType) => {
     const prevPath = usePrevious(props.imagePath);
@@ -24,13 +24,13 @@ const ViewButton = (props: propsType) => {
 
     useEffect(() => {
         if (props.isPrevious) {
-            setImagesOpacity([0, 100])
-            setImagesPath([prevPath, props.imagePath])
+            setImagesOpacity([0, 100]);
+            setImagesPath([prevPath, props.imagePath]);
         } else {
-            setImagesOpacity([100, 0])
-            setImagesPath([props.imagePath, prevPath])
+            setImagesOpacity([100, 0]);
+            setImagesPath([props.imagePath, prevPath]);
         }
-    }, [props.isPrevious])
+    }, [props.isPrevious]);
 
     return (
         <div className={`${styles.viewButton}`}
@@ -44,7 +44,7 @@ const ViewButton = (props: propsType) => {
                         alt=""/>
             }
         </div>
-    )
-}
+    );
+};
 
 export default ViewButton;

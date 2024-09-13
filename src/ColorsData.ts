@@ -48,4 +48,4 @@ export const availableColors: colorType[] = [
         texture: "/textures/colors/Body_Midnight_D.webp",
         color: "#253746"
     },
-]
+];

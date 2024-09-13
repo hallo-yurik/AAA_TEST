@@ -38,6 +38,14 @@
     animation-name: enlarge;
 }
 
+.logo {
+    position: absolute;
+
+    transform: translate(0, -50%);
+    top: 100px;
+    left: 60px;
+}
+
 @keyframes enlarge {
     0% {
         width: 30vw;

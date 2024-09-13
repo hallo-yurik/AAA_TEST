@@ -1,4 +1,4 @@
-import {useGLTF} from "@react-three/drei"
+import {useGLTF} from "@react-three/drei";
 import {Color, Texture, TextureLoader} from "three";
 import {useCallback, useEffect, useRef} from "react";
 import {colorType} from "@/ColorsData";
@@ -6,16 +6,16 @@ import * as TWEEN from "@tweenjs/tween.js";
 import {useFrame} from "@react-three/fiber";
 import {Easing} from "@tweenjs/tween.js";
 
-const MODEL_PATH = "/models/model_1.glb"
+const MODEL_PATH = "/models/model_1.glb";
 
-useGLTF.preload(MODEL_PATH)
+useGLTF.preload(MODEL_PATH);
 
 type propsType = {
     currentColor: colorType
 }
 
-const BODY_ORM_PATH = "/textures/Body_ORM.png.jpg"
-const BITS_ORM_PATH = "/textures/Bits_ORM.png.jpg"
+const BODY_ORM_PATH = "/textures/Body_ORM.png.jpg";
+const BITS_ORM_PATH = "/textures/Bits_ORM.png.jpg";
 
 const Model = (props: propsType) => {
     const mixValTweenRef = useRef({value: 0});
@@ -104,7 +104,7 @@ const Model = (props: propsType) => {
                             diffuseColor *= texelColor;
                         #endif
                     `);
-                }
+                };
             }
 
             for (const materialName in gltf.materials) {
@@ -131,11 +131,11 @@ const Model = (props: propsType) => {
                     }
                 })
                 .easing(Easing.Quadratic.Out)
-                .start()
+                .start();
 
             material.needsUpdate = true;
         }
-    }, [])
+    }, []);
 
     // Updating diffuse texture.
     useEffect(() => {
@@ -149,12 +149,12 @@ const Model = (props: propsType) => {
                 setMaterials(texture, props.currentColor.color);
             }
         );
-    }, [props.currentColor.texture])
+    }, [props.currentColor.texture]);
 
     useFrame(() => {
         tweenRef.current.update();
         tweenOpacityRef.current.update();
-    })
+    });
 
     const setMaterials = useCallback((texture, color) => {
         mapNextTweenRef.current.value = texture;
@@ -184,14 +184,14 @@ const Model = (props: propsType) => {
                     }
                 }
             })
-            .start()
-    }, [])
+            .start();
+    }, []);
 
     return (
         <mesh>
             <primitive object={gltf.scene} scale={[6.5, 6.5, 6.5]}/>
         </mesh>
-    )
-}
+    );
+};
 
 export default Model;

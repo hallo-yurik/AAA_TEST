@@ -33,7 +33,7 @@ const OrbitManager = (props: propsType) => {
             const currentAngle = props.orbitRef.current.getAzimuthalAngle();
             props.orbitRef.current.setAzimuthalAngle(currentAngle - Math.PI / 180 * dt / 4);
         }
-    })
+    });
 
     return (
         <OrbitControls
@@ -47,7 +47,7 @@ const OrbitManager = (props: propsType) => {
             enableZoom={false}
             movedByButton={false}
         />
-    )
-}
+    );
+};
 
 export default OrbitManager;

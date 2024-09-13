@@ -32,7 +32,7 @@ const ThreeScene = (props: propsType) => {
             />
             <OrbitManager orbitRef={props.orbitRef}/>
         </Canvas>
-    )
-}
+    );
+};
 
 export default ThreeScene;

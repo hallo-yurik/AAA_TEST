@@ -9,7 +9,7 @@ type propsType = {
     isPrevious: boolean
 }
 
-const BASE_IMG_URL = "/images"
+const BASE_IMG_URL = "/images";
 
 const ViewButtonsContainer = (props: propsType) => {
     const rotateCallback: rotateCallbackType = (angleInRad) => {
@@ -17,7 +17,7 @@ const ViewButtonsContainer = (props: propsType) => {
             props.orbitRef.current.setAzimuthalAngle(angleInRad);
             props.orbitRef.current.movedByButton = true;
         }
-    }
+    };
 
     return (
         <div className={styles.viewButtonContainer}>
@@ -37,7 +37,7 @@ const ViewButtonsContainer = (props: propsType) => {
                         isPrevious={props.isPrevious}
             />
         </div>
-    )
-}
+    );
+};
 
 export default ViewButtonsContainer;

@@ -22,7 +22,7 @@ const ColorButtonsContainer = (props: propsType) => {
                 />
             ))}
         </div>
-    )
-}
+    );
+};
 
 export default ColorButtonsContainer;
