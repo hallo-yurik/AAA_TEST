@@ -2,7 +2,7 @@
 const nextConfig = {
     transpilePackages: ['three'],
     // output: "export",
-    // basePath: "/AAA_TEST",
+    basePath: "/AAA_TEST",
 };
 
 export default nextConfig;
