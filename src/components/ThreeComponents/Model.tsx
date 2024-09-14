@@ -5,8 +5,9 @@ import {colorType} from "@/ColorsData";
 import * as TWEEN from "@tweenjs/tween.js";
 import {useFrame} from "@react-three/fiber";
 import {Easing} from "@tweenjs/tween.js";
+import {prefix} from "@/prefix";
 
-const MODEL_PATH = "/models/model_1.glb";
+const MODEL_PATH = `${prefix}/models/model_1.glb`;
 
 useGLTF.preload(MODEL_PATH);
 

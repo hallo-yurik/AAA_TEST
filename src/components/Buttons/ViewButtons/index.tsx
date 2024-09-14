@@ -2,6 +2,7 @@ import {rotateCallbackType} from "@/components/Buttons/Overlay";
 import styles from "@/styles/ViewButtons.module.css";
 import ViewButton from "@/components/Buttons/ViewButtons/ViewButton";
 import {RefObject} from "react";
+import {prefix} from "@/prefix";
 
 type propsType = {
     orbitRef: RefObject<any> | null
@@ -10,7 +11,7 @@ type propsType = {
     setMovedByButton: (movedByButton: boolean) => void
 }
 
-const BASE_IMG_URL = "/images";
+const BASE_IMG_URL = `${prefix}/images`;
 
 const ViewButtonsContainer = (props: propsType) => {
     const rotateCallback: rotateCallbackType = (angleInRad) => {
