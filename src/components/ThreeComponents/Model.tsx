@@ -15,8 +15,8 @@ type propsType = {
     currentColor: colorType
 }
 
-const BODY_ORM_PATH = "/textures/Body_ORM.png.jpg";
-const BITS_ORM_PATH = "/textures/Bits_ORM.png.jpg";
+const BODY_ORM_PATH = `${prefix}/textures/Body_ORM.png.jpg`;
+const BITS_ORM_PATH = `${prefix}/textures/Bits_ORM.png.jpg`;
 
 const Model = (props: propsType) => {
     const mixValTweenRef = useRef({value: 0});
