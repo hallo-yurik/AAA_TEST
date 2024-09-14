@@ -1,7 +1,6 @@
 import ViewCamera from "@/components/ThreeComponents/ViewCamera";
-import {useCallback, useEffect, useRef} from "react";
-import {PerspectiveCamera, WebGLRenderer} from "three";
-import {useThree} from "@react-three/fiber";
+import {useRef} from "react";
+import {PerspectiveCamera} from "three";
 import {colorType} from "@/ColorsData";
 
 type propsType = {
@@ -13,7 +12,7 @@ const ViewCameraManager = (props: propsType) => {
     const viewCamerasSet = useRef([new PerspectiveCamera(10), new PerspectiveCamera(10), new PerspectiveCamera(10)]);
 
     // Uncomment this code to take screenshots for view-images.
-
+    console.log(props);
     // const three = useThree();
     // const takeScreenshots = useCallback(() => {
     //     const newImages = [];
@@ -60,7 +59,7 @@ const ViewCameraManager = (props: propsType) => {
                         quaternion={[4.2663631931734054e-32, 1, 3.061616997868383e-17, -1.3934999695075554e-15]}
                         cameraSet={viewCamerasSet}
                         imageIndex={2}
-                        image={""}/>
+                        />
         </>
     );
 };

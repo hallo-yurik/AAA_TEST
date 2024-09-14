@@ -1,10 +1,10 @@
-import {PerspectiveCamera, Quaternion, Vector3} from "three";
-import {LegacyRef, useEffect} from "react";
+import {Quaternion, Vector3} from "three";
+import {RefObject, useEffect} from "react";
 
 type propsType = {
     position: [number, number, number],
     quaternion: [number, number, number, number],
-    cameraSet: LegacyRef<typeof PerspectiveCamera[]>,
+    cameraSet: RefObject<any>,
     imageIndex: number
 }
 

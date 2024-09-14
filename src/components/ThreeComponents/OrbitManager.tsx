@@ -1,9 +1,11 @@
-import {LegacyRef, useEffect, useRef} from "react";
+import {RefObject, useRef} from "react";
 import {OrbitControls} from "@react-three/drei";
 import {useFrame} from "@react-three/fiber";
 
 type propsType = {
-    orbitRef: LegacyRef<any>
+    orbitRef: RefObject<any>
+    movedByButton: boolean
+    setMovedByButton: (movedByButton: boolean) => void
 }
 
 const OrbitManager = (props: propsType) => {
@@ -18,9 +20,9 @@ const OrbitManager = (props: propsType) => {
             return;
         }
 
-        if (props.orbitRef.current.movedByButton) {
+        if (props.movedByButton) {
             noActionTimerRef.current = -1000;
-            props.orbitRef.current.movedByButton = false;
+            props.setMovedByButton(false);
 
             return;
         }
@@ -45,7 +47,7 @@ const OrbitManager = (props: propsType) => {
             maxPolarAngle={Math.PI / 2}
             enablePan={false}
             enableZoom={false}
-            movedByButton={false}
+            // movedByButton={false}
         />
     );
 };

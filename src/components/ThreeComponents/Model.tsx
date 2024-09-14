@@ -57,7 +57,7 @@ const Model = (props: propsType) => {
         );
 
         for (const materialName in gltf.materials) {
-            const material = gltf.materials[materialName];
+            const material: any = gltf.materials[materialName];
 
             if (materialName.toUpperCase().includes("METAL")) {
                 material.aoMap = bodyOrmTexture;
@@ -85,7 +85,7 @@ const Model = (props: propsType) => {
             }
 
             if (!materialName.toUpperCase().includes("BITS")) {
-                material.onBeforeCompile = (shader) => {
+                material.onBeforeCompile = (shader: any) => {
                     shader.uniforms.map1 = mapNextTweenRef.current;
                     shader.uniforms.mixVal = mixValTweenRef.current;
 
@@ -143,7 +143,7 @@ const Model = (props: propsType) => {
 
         loader.load(
             props.currentColor.texture,
-            function (texture) {
+            function (texture: any) {
                 texture.flipY = false;
                 texture.needsUpdate = true;
                 setMaterials(texture, props.currentColor.color);
@@ -156,7 +156,7 @@ const Model = (props: propsType) => {
         tweenOpacityRef.current.update();
     });
 
-    const setMaterials = useCallback((texture, color) => {
+    const setMaterials = useCallback((texture: any, color: string) => {
         mapNextTweenRef.current.value = texture;
         mixValTweenRef.current.value = 0;
 
@@ -165,7 +165,7 @@ const Model = (props: propsType) => {
             .easing(Easing.Quadratic.Out)
             .onUpdate(({value}) => {
                 for (const materialName in gltf.materials) {
-                    const material = gltf.materials[materialName];
+                    const material: any = gltf.materials[materialName];
 
                     if (materialName.toUpperCase().includes("BITS")) {
                         material.color.lerp(new Color(color), value);
@@ -176,7 +176,7 @@ const Model = (props: propsType) => {
             })
             .onComplete(() => {
                 for (const materialName in gltf.materials) {
-                    const material = gltf.materials[materialName];
+                    const material: any = gltf.materials[materialName];
 
                     if (!materialName.toUpperCase().includes("BITS")) {
                         material.map = mapNextTweenRef.current.value;

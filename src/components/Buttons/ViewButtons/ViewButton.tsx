@@ -9,7 +9,7 @@ type propsType = {
     isPrevious: boolean
 }
 
-export const usePrevious = (value) => {
+export const usePrevious = (value: any) => {
     const ref = useRef();
     useEffect(() => {
         ref.current = value;
