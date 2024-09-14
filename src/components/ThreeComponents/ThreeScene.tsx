@@ -8,6 +8,7 @@ import styles from "@/styles/Background.module.css";
 import ViewCameraManager from "@/components/ThreeComponents/ViewCameraManager";
 import {colorType} from "@/ColorsData";
 import OrbitManager from "@/components/ThreeComponents/OrbitManager";
+import {prefix} from "@/prefix";
 
 type propsType = {
     orbitRef: RefObject<any>
@@ -24,7 +25,7 @@ const ThreeScene = (props: propsType) => {
             <Model currentColor={props.currentColor}/>
             <ViewCameraManager currentColor={props.currentColor}/>
             <Environment
-                files={"/textures/studio_small.exr"}
+                files={`${prefix}/textures/studio_small.exr`}
                 background={false}
                 environmentIntensity={1}
                 resolution={16}
